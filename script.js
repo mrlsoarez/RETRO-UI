@@ -1,187 +1,130 @@
 /// CLASSES
 
-class Window {
-
-    FUNCTIONAL = { 'Paint': Paint, 'Calculator': Calculator }
-
-    constructor(title, width, height, icon, iframe) {
-        this.title = title
-        this.width = width
-        this.height = height
-        this.icon = icon
-        this.iframe = iframe
-    }
-
-    setPosition(X, Y) {
-        this.scaleX = X
-        this.scaleY = Y
-    }
-
-    getPosition() {
-        return { X: this.scaleX, Y: this.scaleY }
-    }
-
-    moveX(left, right, X) {
-
-        if (right <= 1) {
-            return '0px'
-        }
-
-        if (left + X >= 8) {
-            return left + X + 'px'
-        }
-        return undefined
-    }
-
-    moveY(top, bottom, Y) {
-        
-        if (bottom <= 1) {
-            return '0px'
-        }
-
-        if (top + Y >= 8) {
-            return top + Y + 'px'
-        }
-        return undefined
-    }
-}
-
-class Paint extends Window {
-    constructor(title, width, height, icon, iframe) {
-        super(title, width, height, icon, iframe)
-    }
-}
-
-class Calculator extends Window {
-    constructor(title, width, height, icon, iframe) {
-        super(title, width, height, icon, iframe)
-    }
-}
-
+import { DOMBuilder } from "./MODULES/DOMBuilder.js"
+import { getPageRelation } from './MODULES/PageRelation.js'
+import { Window } from './MODULES/Classes.js'
 /// ********************************************
 
 // SEGUNDA RELAÇÃO COM AS INFO DE CADA WINDOW
-
 const OPEN_WINDOWS = []
-const MENU_BUTTONS = document.querySelectorAll('.Functional')
+const WINDOW_RELATION = getPageRelation()
 
-const WINDOW_RELATION = [
-    {
-        'Paint': {
-            'width': '500px',
-            'height': '500px',
-            'icon': '#',
-            'iframe': 'pages/paint/paint.html'
-        }
-    },
-    {
-        'Calculator': {
-            'width': '500px',
-            'height': '500px',
-            'icon': '#',
-            'iframe': 'pages/calculator/calculator.html'
-        }
-    }
-]
+function DOMInteraction() {
 
-for (let i = 0; i < MENU_BUTTONS.length; i++) {
-    MENU_BUTTONS[i].addEventListener('click', () => {
-
-        if (MENU_BUTTONS[i].className.includes('Open')) {
-            return
-        }
-
-        const window = new Window()
-        for (key_name in window.FUNCTIONAL) {
-            for (obj in WINDOW_RELATION[i]) {
-                if (key_name == MENU_BUTTONS[i].id && key_name == obj) {
-                    const NEW_OPEN_WINDOW = new window.FUNCTIONAL[key_name](obj, WINDOW_RELATION[i][obj].width, WINDOW_RELATION[i][obj].height, WINDOW_RELATION[i][obj].icon, WINDOW_RELATION[i][obj].iframe)
-                    OPEN_WINDOWS.push(NEW_OPEN_WINDOW)
-                    renderOpenWindows(OPEN_WINDOWS)
-                    MENU_BUTTONS[i].classList.add('Open')
-                }
-            }
-        }
-    })
+    const MENU_BUTTONS = document.querySelectorAll('.Functional')
+    
+    OpenNewWindow(MENU_BUTTONS)
 }
 
-function appendWindow(APP_REFERENCE) {
-    if (!APP_REFERENCE.className.includes('Open')) {
-        APP_REFERENCE.classList.add('Open')
+function OpenNewWindow(Buttons) {
+    for (let i = 0; i < Buttons.length; i++) {
+        Buttons[i].addEventListener('click', () => {
+            if (Buttons[i].className.includes('Open')) {
+                return
+            }
+            const window = new Window()
+            for (let key_name in window.FUNCTIONAL) {
+                for (let obj in WINDOW_RELATION[i]) {
+                    if (key_name == Buttons[i].id && key_name == obj) {
+                        const NEW_OPEN_WINDOW = new window.FUNCTIONAL[key_name](obj, WINDOW_RELATION[i][obj].width, WINDOW_RELATION[i][obj].height, WINDOW_RELATION[i][obj].icon, WINDOW_RELATION[i][obj].iframe)
+                        OPEN_WINDOWS.push(NEW_OPEN_WINDOW)
+                        renderOpenWindows(OPEN_WINDOWS)
+                        Buttons[i].classList.add('Open')
+                    }
+                }
+            }
+        })
     }
 }
 
 function renderOpenWindows(windows) {
 
+    const DOM = DOMBuilder()
+
     function Header(title, icon_url) {
-        const header = document.createElement('div')
-        header.className = 'Header'
 
-        // title
-        const title_container = document.createElement('div')
-        title_container.className = 'Title'
-        const span = document.createElement('span')
-        span.textContent = title
-        const icon = document.createElement('img')
-        icon.setAttribute('src', icon_url)
-        title_container.append(icon, span)
+        const HEADER = DOM.buildElement('div', 'Header')
 
-        // botoes
-        const button_container = document.createElement('div')
-        button_container.className = 'Buttons'
-        for (let i = 0; i < 3; i++) {
-            const btn = document.createElement('button')
-            if (i == 0) {
-                btn.id = 'close'
-                btn.innerHTML = '-'
-            }
-            if (i == 1) {
-                btn.id = 'full'
-                btn.innerHTML = 'O'
-            }
-            if (i == 2) {
-                btn.id == 'minimize'
-                btn.innerHTML = 'x'
-            }
-            button_container.append(btn)
+        function buildTitle() {
+            const TITLE_CONTAINER = DOM.buildElement('div', 'Title')
+            const text = DOM.buildElementInnerContent('span', 'Title-Inner', title)
+            const icon = DOM.buildElementAttribute('img', 'App-Icon', 'src', icon_url)
+            TITLE_CONTAINER.append(icon, text)   
+            return TITLE_CONTAINER 
         }
-        header.append(title_container, button_container)
-        return header
+
+        function buildButtons() {
+
+            const BUTTON_CONTAINER = DOM.buildElement('div', 'Buttons')
+
+            for (let i = 0; i < 3; i++) {
+                if (i == 0) { var btn = DOM.buildElementInnerContent('button', 'Less', '-')}
+                if (i == 1) { var btn = DOM.buildElementInnerContent('button', 'Full', 'O')}
+                if (i == 2) { var btn = DOM.buildElementInnerContent('button', 'Close', 'X')}
+                BUTTON_CONTAINER.append(btn)
+            }
+
+            return BUTTON_CONTAINER
+        }
+
+        HEADER.append(buildTitle(), buildButtons())
+        return HEADER
     }
 
     function Content(iframe_link) {
-        const content = document.createElement('div')
-        const iframe = document.createElement('object')
-        iframe.setAttribute('data', iframe_link)
-        content.append(iframe)
-        content.className = 'Content'
-        return content
+        const CONTENT = DOM.buildElement('div', 'Content') 
+
+        function buildInnerContent() {
+            const iframe = DOM.buildElementAttribute('object', 'Inner', 'data', iframe_link)
+            return iframe
+        }
+
+        CONTENT.append(buildInnerContent())
+        return CONTENT
     }
 
+    function TaskBar(Window) {
 
+        const APP = DOM.buildElement('div', 'App')
+        const img = DOM.buildElementAttribute('img', 'Taskbar-Image', 'img', Window.icon)
+        const span = DOM.buildElementInnerContent('span', 'Taskbar-Title', Window.title)
 
-    function Container(title, width, height, icon, iframe) {
-        const container = document.createElement('div')
-        const header = Header(title, icon)
-        const content = Content(iframe)
-        container.className = 'Window'
-        container.style.width = width
-        container.style.height = height
-        container.append(header, content)
-        return container
+        APP.append(img, span)
+        return APP
     }
+
+    function Container(Window) {
+
+        const CONTAINER = DOM.buildElement('div', 'Window')
+
+        function DefineWindowStyle() {
+            CONTAINER.style.width = Window.width 
+            CONTAINER.style.height = Window.height 
+            CONTAINER.style.left = Window.getPosition().X
+            CONTAINER.style.top = Window.getPosition().Y 
+        }
+
+        const header = Header(Window.title, Window.icon)
+        const content = Content(Window.iframe)
+
+        DefineWindowStyle()
+
+        CONTAINER.append(header, content)
+        return CONTAINER
+    }
+
 
     const DESKTOP = document.querySelector('.Desktop')
+    const TASKBAR = document.querySelector('.Taskbar')
 
-    while (DESKTOP.hasChildNodes()) {
-        DESKTOP.removeChild(DESKTOP.firstChild)
-    }
+    DOM.deleteAllChildren(DESKTOP)
+    DOM.deleteAllChildren(TASKBAR)
 
-    for (index in windows) {
-        container = Container(windows[index].title, windows[index].width, windows[index].height, windows[index].icon, windows[index].iframe)
-        container.style.left = windows[index].getPosition().X + 'px'
-        container.style.top = windows[index].getPosition().Y + 'px'
+    for (let index in windows) {
+        let container = Container(windows[index])
+        let task = TaskBar(windows[index])
         DESKTOP.append(container)
+        TASKBAR.append(task)
     }
 
     moveWindow()
@@ -234,16 +177,6 @@ function moveWindow() {
             document.addEventListener('mouseup', stopMoving)
         })
     }
-}/*
-
-
-
-            
-
-            DESKTOP.addEventListener('mousemove', startMoving)
-            DESKTOP.addEventListener('mouseup', stopMoving)
-        })
-        console.log(HEADERS[i], WINDOWS[i], OPEN_WINDOWS[i])
-    }
 }
-*/
+
+document.addEventListener('DOMContentLoaded', DOMInteraction)
