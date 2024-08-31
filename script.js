@@ -4,11 +4,12 @@ class Window {
 
     FUNCTIONAL = {'Paint': Paint, 'Calculator': Calculator}
 
-    constructor(title, width, height, icon) {
+    constructor(title, width, height, icon, iframe) {
         this.title = title
         this.width = width 
         this.height = height
         this.icon = icon
+        this.iframe = iframe
     }
 
     setPosition(X, Y) {
@@ -30,18 +31,14 @@ class Window {
 }
 
 class Paint extends Window {
-    constructor(title, width, height, icon, left, top) {
-        super(title, width, height, icon)
-        this.left = left
-        this.top = top
+    constructor(title, width, height, icon, iframe) {
+        super(title, width, height, icon, iframe)
     }
 }
 
 class Calculator extends Window {
-    constructor(title, width, height, icon, left, top) {
-        super(title, width, height, icon)
-        this.left = left 
-        this.top = top
+    constructor(title, width, height, icon, iframe) {
+        super(title, width, height, icon, iframe)
     }
 }
 
@@ -57,14 +54,16 @@ const WINDOW_RELATION = [
         'Paint': {
             'width': '500px',
             'height': '500px',
-            'icon': '#'
+            'icon': '#',
+            'iframe': 'pages/paint/paint.html'
         }
     },
     {
         'Calculator': {
             'width': '500px',
             'height': '500px',
-            'icon': '#'
+            'icon': '#',
+            'iframe': 'pages/calculator/calculator.html'
         }
     }
 ]
@@ -80,7 +79,8 @@ for (let i = 0; i < MENU_BUTTONS.length; i++) {
         for (key_name in window.FUNCTIONAL) {
             for (obj in WINDOW_RELATION[i]) {
                 if (key_name == MENU_BUTTONS[i].id && key_name == obj) {
-                   const NEW_OPEN_WINDOW = new window.FUNCTIONAL[key_name](obj, WINDOW_RELATION[i][obj].width, WINDOW_RELATION[i][obj].height, WINDOW_RELATION[i][obj].icon)
+                   const NEW_OPEN_WINDOW = new window.FUNCTIONAL[key_name](obj, WINDOW_RELATION[i][obj].width, WINDOW_RELATION[i][obj].height, WINDOW_RELATION[i][obj].icon, WINDOW_RELATION[i][obj].iframe)
+                   console.log(NEW_OPEN_WINDOW, 'obj')
                    OPEN_WINDOWS.push(NEW_OPEN_WINDOW)
                    renderOpenWindows(OPEN_WINDOWS)
                    MENU_BUTTONS[i].classList.add('Open')
@@ -118,15 +118,15 @@ function renderOpenWindows(windows) {
             const btn = document.createElement('button')
             if (i == 0) {
                 btn.id = 'close'
-                btn.value = 'X'
+                btn.innerHTML = '-'
+            }
+            if (i == 1) {
+                btn.id = 'full'
+                btn.innerHTML = 'O'
             }
             if (i == 2) {
-                btn.id = 'full'
-                btn.value = 'O'
-            }
-            if (i == 3) {
                 btn.id == 'minimize'
-                btn.value = '-'
+                btn.innerHTML = 'x'
             }
             button_container.append(btn)
         }
@@ -134,15 +134,26 @@ function renderOpenWindows(windows) {
         return header
     }
 
+    function Content(iframe_link) {
+        const content = document.createElement('div')
+        const iframe = document.createElement('object')
+        iframe.setAttribute('data', iframe_link)
+        console.log(iframe_link)
+        content.append(iframe)
+        content.className = 'Content'
+        return content
+    }
 
 
-    function Container(title, width, height, icon) {
+
+    function Container(title, width, height, icon, iframe) {
         const container = document.createElement('div')
         const header = Header(title, icon)
+        const content = Content(iframe)
         container.className = 'Window'
         container.style.width = width
         container.style.height = height
-        container.append(header)
+        container.append(header, content)
         return container
     }
 
@@ -153,7 +164,7 @@ function renderOpenWindows(windows) {
     }
 
     for (index in windows) {
-        container = Container(windows[index].title, windows[index].width, windows[index].height, windows[index].icon)
+        container = Container(windows[index].title, windows[index].width, windows[index].height, windows[index].icon, windows[index].iframe)
         container.style.left = windows[index].getPosition().X + 'px'
         container.style.top = windows[index].getPosition().Y + 'px'
         console.log(windows[index].getPosition().X)
@@ -190,7 +201,7 @@ function moveWindow() {
 
             function stopMoving() {
                 document.removeEventListener('mousemove', startMoving)
-                WINDOWS[i].style.cursor = 'pointer'
+                WINDOWS[i].style.cursor = 'default'
                 OPEN_WINDOWS[i].setPosition(WINDOWS[i].offsetLeft, WINDOWS[i].offsetTop)
             }
 
