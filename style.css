@@ -1,3 +1,8 @@
+.Desktop {
+    height: 100vh;
+    width: 100vw;
+}
+
 .Window {
     border: 2px solid rgb(38, 78, 255);
     position: absolute;

@@ -2,31 +2,47 @@
 
 class Window {
 
-    FUNCTIONAL = {'Paint': Paint, 'Calculator': Calculator}
+    FUNCTIONAL = { 'Paint': Paint, 'Calculator': Calculator }
 
     constructor(title, width, height, icon, iframe) {
         this.title = title
-        this.width = width 
+        this.width = width
         this.height = height
         this.icon = icon
         this.iframe = iframe
     }
 
     setPosition(X, Y) {
-        this.scaleX = X 
+        this.scaleX = X
         this.scaleY = Y
     }
 
     getPosition() {
-        return {X: this.scaleX, Y : this.scaleY}
+        return { X: this.scaleX, Y: this.scaleY }
     }
 
-    moveX(left, X) {
-        return left + X + 'px'
+    moveX(left, right, X) {
+
+        if (right <= 1) {
+            return '0px'
+        }
+
+        if (left + X >= 8) {
+            return left + X + 'px'
+        }
+        return undefined
     }
 
-    moveY(top, Y) {
-        return top + Y + 'px'
+    moveY(top, bottom, Y) {
+        
+        if (bottom <= 1) {
+            return '0px'
+        }
+
+        if (top + Y >= 8) {
+            return top + Y + 'px'
+        }
+        return undefined
     }
 }
 
@@ -70,7 +86,7 @@ const WINDOW_RELATION = [
 
 for (let i = 0; i < MENU_BUTTONS.length; i++) {
     MENU_BUTTONS[i].addEventListener('click', () => {
-        
+
         if (MENU_BUTTONS[i].className.includes('Open')) {
             return
         }
@@ -79,18 +95,17 @@ for (let i = 0; i < MENU_BUTTONS.length; i++) {
         for (key_name in window.FUNCTIONAL) {
             for (obj in WINDOW_RELATION[i]) {
                 if (key_name == MENU_BUTTONS[i].id && key_name == obj) {
-                   const NEW_OPEN_WINDOW = new window.FUNCTIONAL[key_name](obj, WINDOW_RELATION[i][obj].width, WINDOW_RELATION[i][obj].height, WINDOW_RELATION[i][obj].icon, WINDOW_RELATION[i][obj].iframe)
-                   console.log(NEW_OPEN_WINDOW, 'obj')
-                   OPEN_WINDOWS.push(NEW_OPEN_WINDOW)
-                   renderOpenWindows(OPEN_WINDOWS)
-                   MENU_BUTTONS[i].classList.add('Open')
+                    const NEW_OPEN_WINDOW = new window.FUNCTIONAL[key_name](obj, WINDOW_RELATION[i][obj].width, WINDOW_RELATION[i][obj].height, WINDOW_RELATION[i][obj].icon, WINDOW_RELATION[i][obj].iframe)
+                    OPEN_WINDOWS.push(NEW_OPEN_WINDOW)
+                    renderOpenWindows(OPEN_WINDOWS)
+                    MENU_BUTTONS[i].classList.add('Open')
                 }
             }
         }
     })
 }
 
-function appendWindow(APP_REFERENCE) { 
+function appendWindow(APP_REFERENCE) {
     if (!APP_REFERENCE.className.includes('Open')) {
         APP_REFERENCE.classList.add('Open')
     }
@@ -100,7 +115,7 @@ function renderOpenWindows(windows) {
 
     function Header(title, icon_url) {
         const header = document.createElement('div')
-        header.className = 'Header' 
+        header.className = 'Header'
 
         // title
         const title_container = document.createElement('div')
@@ -138,7 +153,6 @@ function renderOpenWindows(windows) {
         const content = document.createElement('div')
         const iframe = document.createElement('object')
         iframe.setAttribute('data', iframe_link)
-        console.log(iframe_link)
         content.append(iframe)
         content.className = 'Content'
         return content
@@ -167,7 +181,6 @@ function renderOpenWindows(windows) {
         container = Container(windows[index].title, windows[index].width, windows[index].height, windows[index].icon, windows[index].iframe)
         container.style.left = windows[index].getPosition().X + 'px'
         container.style.top = windows[index].getPosition().Y + 'px'
-        console.log(windows[index].getPosition().X)
         DESKTOP.append(container)
     }
 
@@ -177,26 +190,38 @@ function renderOpenWindows(windows) {
 }
 
 function moveWindow() {
-    
-    const DESKTOP = document.querySelector('main')
-    const HEADERS = document.querySelectorAll('.Header') 
-    const WINDOWS = document.querySelectorAll('.Window')
-    
-    const POSITIONS = {X: '', Y: ''}
-    
-    for (let i = 0; i < HEADERS.length; i++) {
 
+    function getOffsetRight(desktop, window, left) {
+        return desktop - (window + left)
+    }
+
+    function getOffsetTop(desktop, window, top) {
+        console.log(desktop, window, top)
+        return desktop - (window + top)
+    }
+
+    const DESKTOP = document.querySelector('main')
+    const HEADERS = document.querySelectorAll('.Header')
+    const WINDOWS = document.querySelectorAll('.Window')
+
+    const POSITIONS = { X: '', Y: '' }
+
+    for (let i = 0; i < HEADERS.length; i++) {
         HEADERS[i].addEventListener('mousedown', (e) => {
 
             const left = WINDOWS[i].offsetLeft
             const top = WINDOWS[i].offsetTop
+
             POSITIONS.X = e.clientX
             POSITIONS.Y = e.clientY
 
             function startMoving(e) {
+                const right = getOffsetRight(DESKTOP.offsetWidth, WINDOWS[i].offsetWidth, WINDOWS[i].offsetLeft)
+                const bottom = getOffsetTop(DESKTOP.offsetHeight, WINDOWS[i].offsetHeight, WINDOWS[i].offsetTop)
                 WINDOWS[i].style.cursor = 'move'
-                WINDOWS[i].style.left = OPEN_WINDOWS[i].moveX(left, e.clientX - POSITIONS.X) 
-                WINDOWS[i].style.top = OPEN_WINDOWS[i].moveY(top, e.clientY - POSITIONS.Y)
+                WINDOWS[i].style.left = OPEN_WINDOWS[i].moveX(left, right, e.clientX - POSITIONS.X)
+                WINDOWS[i].style.top = OPEN_WINDOWS[i].moveY(top, bottom, e.clientY - POSITIONS.Y)
+
             }
 
             function stopMoving() {
