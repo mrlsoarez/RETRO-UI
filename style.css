@@ -1,0 +1,20 @@
+.Window {
+    border: 2px solid rgb(38, 78, 255);
+    position: absolute;
+}
+
+.Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    background: rgb(20, 88, 214);
+}
+
+.Header > .Title, 
+.Header > .Buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
