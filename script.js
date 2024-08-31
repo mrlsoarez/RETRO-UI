@@ -11,12 +11,21 @@ class Window {
         this.icon = icon
     }
 
-    moveX(element, X) {
-        element.style.left = element.offsetLeft + X + 'px'
+    setPosition(X, Y) {
+        this.scaleX = X 
+        this.scaleY = Y
     }
 
-    moveY(element, Y) {
-        element.style.top = element.offsetTop + Y + 'px'
+    getPosition() {
+        return {X: this.scaleX, Y : this.scaleY}
+    }
+
+    moveX(left, X) {
+        return left + X + 'px'
+    }
+
+    moveY(top, Y) {
+        return top + Y + 'px'
     }
 }
 
@@ -62,17 +71,29 @@ const WINDOW_RELATION = [
 
 for (let i = 0; i < MENU_BUTTONS.length; i++) {
     MENU_BUTTONS[i].addEventListener('click', () => {
+        
+        if (MENU_BUTTONS[i].className.includes('Open')) {
+            return
+        }
+
         const window = new Window()
-        for (key in window.FUNCTIONAL) {
+        for (key_name in window.FUNCTIONAL) {
             for (obj in WINDOW_RELATION[i]) {
-                if (key == MENU_BUTTONS[i].id && key == obj) {
-                   const NEW_OPEN_WINDOW = new window.FUNCTIONAL[key](obj, WINDOW_RELATION[i][obj].width, WINDOW_RELATION[i][obj].height, WINDOW_RELATION[i][obj].icon, '0px', '0px')
+                if (key_name == MENU_BUTTONS[i].id && key_name == obj) {
+                   const NEW_OPEN_WINDOW = new window.FUNCTIONAL[key_name](obj, WINDOW_RELATION[i][obj].width, WINDOW_RELATION[i][obj].height, WINDOW_RELATION[i][obj].icon)
                    OPEN_WINDOWS.push(NEW_OPEN_WINDOW)
                    renderOpenWindows(OPEN_WINDOWS)
+                   MENU_BUTTONS[i].classList.add('Open')
                 }
             }
         }
     })
+}
+
+function appendWindow(APP_REFERENCE) { 
+    if (!APP_REFERENCE.className.includes('Open')) {
+        APP_REFERENCE.classList.add('Open')
+    }
 }
 
 function renderOpenWindows(windows) {
@@ -133,6 +154,9 @@ function renderOpenWindows(windows) {
 
     for (index in windows) {
         container = Container(windows[index].title, windows[index].width, windows[index].height, windows[index].icon)
+        container.style.left = windows[index].getPosition().X + 'px'
+        container.style.top = windows[index].getPosition().Y + 'px'
+        console.log(windows[index].getPosition().X)
         DESKTOP.append(container)
     }
 
@@ -141,32 +165,44 @@ function renderOpenWindows(windows) {
 
 }
 
-/*
 function moveWindow() {
-
+    
     const DESKTOP = document.querySelector('main')
     const HEADERS = document.querySelectorAll('.Header') 
     const WINDOWS = document.querySelectorAll('.Window')
-
+    
     const POSITIONS = {X: '', Y: ''}
     
     for (let i = 0; i < HEADERS.length; i++) {
 
         HEADERS[i].addEventListener('mousedown', (e) => {
 
+            const left = WINDOWS[i].offsetLeft
+            const top = WINDOWS[i].offsetTop
             POSITIONS.X = e.clientX
             POSITIONS.Y = e.clientY
 
             function startMoving(e) {
-                OPEN_WINDOWS[i].moveX(e.clientX - POSITIONS.X)
-                OPEN_WINDOWS[i].moveY(e.clientY - POSITIONS.Y)
+                WINDOWS[i].style.cursor = 'move'
+                WINDOWS[i].style.left = OPEN_WINDOWS[i].moveX(left, e.clientX - POSITIONS.X) 
+                WINDOWS[i].style.top = OPEN_WINDOWS[i].moveY(top, e.clientY - POSITIONS.Y)
             }
 
             function stopMoving() {
-                DESKTOP.removeEventListener('mousemove', startMoving)
-                OPEN_WINDOWS[i].left = WINDOWS[i].offsetLeft 
-                OPEN_WINDOWS[i].top = WINDOWS[i].offsetTop
+                document.removeEventListener('mousemove', startMoving)
+                WINDOWS[i].style.cursor = 'pointer'
+                OPEN_WINDOWS[i].setPosition(WINDOWS[i].offsetLeft, WINDOWS[i].offsetTop)
             }
+
+            document.addEventListener('mousemove', startMoving)
+            document.addEventListener('mouseup', stopMoving)
+        })
+    }
+}/*
+
+
+
+            
 
             DESKTOP.addEventListener('mousemove', startMoving)
             DESKTOP.addEventListener('mouseup', stopMoving)
