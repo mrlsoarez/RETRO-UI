@@ -1,7 +1,5 @@
 export class Window {
 
-    FUNCTIONAL = { 'Paint': Paint, 'Calculator': Calculator }
-
     constructor(title, width, height, icon, iframe) {
         this.title = title
         this.width = width
@@ -11,22 +9,22 @@ export class Window {
     }
 
     setPosition(X, Y) {
-        this.scaleX = X
-        this.scaleY = Y
+        this.left = X
+        this.top = Y
     }
 
     getPosition() {
-        return { X: this.scaleX + 'px', Y: this.scaleY + 'px' }
+        return { left: this.left , top: this.top  }
     }
 
     moveX(left, right, X) {
 
         if (right <= 1) {
-            return '0px'
+            return 0
         }
 
         if (left + X >= 8) {
-            return left + X + 'px'
+            return left + X
         }
         return undefined
     }
@@ -34,24 +32,23 @@ export class Window {
     moveY(top, bottom, Y) {
         
         if (bottom <= 1) {
-            return '0px'
+            return 0
         }
 
         if (top + Y >= 8) {
-            return top + Y + 'px'
+            return top + Y
         }
         return undefined
     }
+
+    getOffsetRight(desktop, window, left) {
+        return desktop - (window + left)
+    }
+
+    getOffsetBottom(desktop, window, top) {
+        return desktop - (window + top)
+    }
+
+
 }
 
-class Paint extends Window {
-    constructor(title, width, height, icon, iframe) {
-        super(title, width, height, icon, iframe)
-    }
-}
-
-class Calculator extends Window {
-    constructor(title, width, height, icon, iframe) {
-        super(title, width, height, icon, iframe)
-    }
-}
