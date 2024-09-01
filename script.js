@@ -1,8 +1,8 @@
 /// CLASSES
 
-import { DOMBuilder } from "./MODULES/DOMBuilder.js"
-import { getPageRelation } from './MODULES/PageRelation.js'
-import { Window } from './MODULES/Classes.js'
+import { DOMBuilder } from "./Modules/DOMBuilder.js"
+import { getPageRelation } from './Modules/PageRelation.js'
+import { Window } from './Modules/Classes.js'
 /// ********************************************
 
 // SEGUNDA RELAÇÃO COM AS INFO DE CADA WINDOW
