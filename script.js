@@ -1,8 +1,8 @@
 /// CLASSES
 
-import { DOMBuilder } from "./Modules/DOMBuilder.js"
-import { getPageRelation } from './Modules/PageRelation.js'
-import { Window } from './Modules/Classes.js'
+import { DOMBuilder } from "./modules/DOMBuilder.js"
+import { getPageRelation } from './modules/PageRelation.js'
+import { Window } from './modules/Classes.js'
 /// ********************************************
 
 // SEGUNDA RELAÇÃO COM AS INFO DE CADA WINDOW
@@ -14,7 +14,6 @@ const DESKTOP = document.querySelector('main')
 function DOMInteraction() {
 
     const MENU_BUTTONS = document.querySelectorAll('.Functional')
-
     OpenNewWindow(MENU_BUTTONS)
 }
 
@@ -22,11 +21,9 @@ function OpenNewWindow(Buttons) {
 
     for (let i = 0; i < Buttons.length; i++) {
         Buttons[i].addEventListener('click', () => {
-
             if (Buttons[i].className.includes('Open')) {
                 return
             }
-
 
             for (let obj in WINDOW_RELATION[i]) {
                 if (Buttons[i].id == obj) {
@@ -44,7 +41,6 @@ function OpenNewWindow(Buttons) {
 }
 
 function renderOpenWindows(windows, index) {
-
     const DOM = DOMBuilder()
 
     function Header(title, icon_url) {
@@ -64,9 +60,22 @@ function renderOpenWindows(windows, index) {
             const BUTTON_CONTAINER = DOM.buildElement('div', 'Buttons')
 
             for (let i = 0; i < 3; i++) {
-                if (i == 0) { var btn = DOM.buildElementInnerContent('button', 'Header-Button Less', '-') }
-                if (i == 1) { var btn = DOM.buildElementInnerContent('button', 'Header-Button Full', 'O') }
-                if (i == 2) { var btn = DOM.buildElementInnerContent('button', 'Header-Button Close', 'X') }
+
+                if (i == 0) { 
+                    var btn = DOM.buildElementInnerContent('button', 'Header-Button Less', '-') 
+                    btn.innerHTML = "<img src = 'assets/images/window/minimize-window.png'></img>"
+                }
+
+                if (i == 1) { 
+                    var btn = DOM.buildElementInnerContent('button', 'Header-Button Full', 'O') 
+                    btn.innerHTML = "<img src = 'assets/images/window/full-window.jpg'></img>"
+                }
+
+                if (i == 2) { 
+                    var btn = DOM.buildElementInnerContent('button', 'Header-Button Close', 'X') 
+                    btn.innerHTML = "<img src = 'assets/images/window/close-window.png'></img>"
+                }
+
                 BUTTON_CONTAINER.append(btn)
             }
 

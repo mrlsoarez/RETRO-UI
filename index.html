@@ -4,16 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retro-UI</title>
-    <script type = 'module' defer src = "script.js"></script>
     <link rel = 'stylesheet' href = 'style.css'></link>
+    <script defer src = "script.js" type = "module"></script>
 </head>
 <body>
-    <main class = "Desktop">
-        
-    </main>
-    <section class = "Taskbar">
+    <!-- Desktop session -->
+    <section class = "Desktop"></section>
+    
+    <!-- Menu session -->
+    <section class = "Menu">  
+            <div class="Top">
+                <div class="Icon"><img src="assets/images/main/menu-icon.jpg"></div>
+                <div class="Username"> <span> Murilo </span></div>
+            </div>   
+            <div class = 'Middle'>
+                <div class = 'Left Side'>
+                    <section>
+                        <div class = 'Functional Cell Closed' id = 'Internet Explorer'>
+                            <img src = "assets/images/Internet Explorer.ico">
+                            <div class = 'App-title'>
+                                <h4> Internet</h4>
+                                <span> Internet Explorer</span>
+                            </div>
+                        </div>
+                        <div class = 'Functional Cell Closed' id = 'Email'>
+                            <img src = "assets/images/Email.ico">
+                            <div class = 'App-title'>
+                                <h4> E-mail </h4>
+                                <span> E-mail </span>
+                            </div>
+                        </div>
+                        <div class = 'Functional Cell Closed' id = 'Paint'>
+                            <img src = "assets/images/Paint.ico">
+                            <span> Paint </span>
+                        </div>
+                        <div class = 'Functional Cell Closed' id = 'Calculator'>
+                            <img src = "assets/images/Calculator.ico">
+                            <span> Calculator </span>
+                        </div>
+                        <div class = 'Functional Cell Closed' id = 'Windows Media Player'>
+                            <img src = "assets/images/Windows Media Player.ico">
+                            <span> Windows Media Player </span>
+                        </div>
+                        <div class = 'Functional Cell Closed' id = 'Notepad'>
+                            <img src = "assets/images/Notepad.ico">
+                            <span> Notepad </span>
+                        </div>
+                    </section>
+                   
+                </div>
+                
+                <div class="Right Side">
+                    <section>
+                        <div class="Cell Closed">
+                            <img src = "assets/images/my documents.ico">
+                            <span> My Documents </span>
+                        </div>
+                        <div class="Cell Closed">
+                            <img src="assets/images/my pictures.ico">
+                            <span> My Pictures </span>
+                        </div>
+                        <div class="Cell Closed">
+                            <img src="assets/images/my music.ico">
+                            <span> My Music </span>
+                        </div>
+                        <div class="Cell Closed">
+                            <img src="assets/images/my computer.ico">
+                            <span> My Computer </span>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="Cell Closed">
+                            <img src="assets/images/control-panel.ico">
+                            <span> Control Panel </span>
+                        </div>
+                        <div class="Cell Closed">
+                            <img src="assets/images/connect to.ico">
+                            <span> Connect to... </span>
+                        </div>
+                        <div class="Cell Closed">
+                            <img src="assets/images/printers and faxers.ico">
+                            <span> Printers and Faxers </span>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="Cell Closed">
+                            <img src="assets/images/help.ico">
+                            <span> Help and Support </span>
+                        </div>
+                        <div class="Cell Closed">
+                            <img src="assets/images/search.ico">
+                            <span> Search </span>
+                        </div>
+                        <div class="Cell Closed">
+                            <img src="assets/images/run.ico">
+                            <span> Run </span>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            
+            <div class="Bottom">
+                <div class="Buttons">
+                    <div class="Button container Log-off ">
+                        <button><img src = "assets/images/log-off.png"></button>
+                        <span> Log off </span>
+                    </div>
+                    <div class="Button container Turn-off">
+                        <button><img src = "assets/images/turnoff.ico"></button>
+                        <span> Turn off </span>
+                    </div>
+                </div>
+            </div>
     </section>
-    <button id = "Paint" class = "Functional">Paint</button>
-    <button id = "Calculator" class = "Functional">Calculator</button>
+
+    <!-- Taskbar session -->
+    <section class = "Taskbar">
+        <button class = "Windows-Button">
+            <div class="Button inner content">
+                <img src = "assets/images/main/windows-logo.png">
+                <span> Start </span>
+            </div>
+        </button>
+    </section>
+
+
 </body>
 </html>

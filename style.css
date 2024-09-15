@@ -3,12 +3,238 @@
     margin: 0;
 }
 
+:root {
+    --main-blue: #0059FF;
+    --light-blue: #689dff;
+    --taskbar: #234bff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== DESKTOP ===== */
 
 .Desktop {
     height: 100vh;
     width: 100vw;
     border: 2px solid black;
+    background-image: url('/assets/images/main/wallpaper.jpg');
 }
+
+/* ===== MENU ===== */
+
+
+.Menu {
+    width: 350px;
+    height: 550px;
+    position: absolute;
+    bottom: 3.5%;
+    overflow: hidden;
+    text-shadow: none;
+    border-radius: 0px 22px 0px 0px;
+    border: 2px solid rgb(0, 45, 123);
+}
+
+.Menu.Open {
+    display: block;
+}
+
+.Menu .Top {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 15%;
+    border-radius: 0px 20px 0px 0px;
+    background: linear-gradient(var(--main-blue), var(--light-blue));
+    box-shadow: inset 0rem 1.25rem 0.4rem -1rem var(--white-shadow);
+}
+
+.Menu .Top .Icon {
+    max-width: 60px;
+    max-height: 60px;
+    overflow: hidden;
+    margin-left: 15px;
+    border: 3px solid rgb(221, 221, 221);
+    border-radius: 15px;
+}
+
+.Menu .Top .Icon img {
+    width: 100%;
+    height: 100%;
+}
+
+.Menu .Top .Username {
+    margin-left: 15px;
+    font-size: 2.5rem;
+    color: white;
+}
+
+.Menu .Middle {
+    display: flex;
+    background: white;
+    height: 70%;
+}
+
+.Menu .Middle .Left.Side {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    height: 100%;
+}
+
+.Menu .Middle .Left.Side button {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.Menu .Middle .Left.Side img {
+    width: 42px;
+    height: 42px;
+}
+
+.Menu .Middle .Left.Side>section:nth-child(1) {
+    height: 90%;
+}
+
+.Menu .Middle .Left.Side .Functional {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 4px;
+    padding: 3px;
+    font-size: 12.5px;
+    font-weight: lighter;
+}
+
+
+.Menu .Middle .Left.Side .Functional:hover {
+    background-color: rgb(36, 76, 255);
+    color: white;
+    cursor: pointer;
+}
+
+
+.Menu .Middle .Left.Side>section:nth-child(2) {
+    display: flex;
+    align-items: center;
+    height: 20%;
+    border-top: 1px solid grey;
+}
+
+.Menu .Middle .Left.Side>section:nth-child(2) .All.program.session {
+    display: flex;
+    place-items: center;
+    margin-top: 15px;
+    width: 100%;
+}
+
+
+.Menu .Middle .Left.Side>section:nth-child(2) button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    height: 50px;
+    width: 150px;
+    font-size: 13px;
+    font-weight: 500;
+    background: white;
+    border: none;
+    box-shadow: none;
+}
+
+.Menu .Middle .Left.Side>section:nth-child(2) img {
+    width: 18px;
+    height: 18px;
+}
+
+.Menu .Middle .Right.Side {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+    height: 100%;
+    background: #D7E7F8;
+    border-left: 1px solid grey;
+}
+
+.Menu .Middle .Right.Side>section {
+    font-size: 12.5px;
+    border-top: 1px solid grey;
+}
+
+.Menu .Middle .Right.Side>section:nth-child(1) {
+    height: 40%;
+    font-weight: bolder;
+}
+
+.Menu .Middle .Right.Side>section:nth-child(2) {
+    height: 30%;
+}
+
+.Menu .Middle .Right.Side>section:nth-child(3) {
+    height: 30%;
+}
+
+
+
+.Menu .Middle .Right.Side .Cell.Closed {
+    height: 37.5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.Menu .Middle .Right.Side .Cell.Closed img {
+    width: 32px;
+    height: 32px;
+    margin-left: 10px;
+}
+
+.Menu .Bottom {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    background: #245EDB;
+    height: 15%;
+    color: white;
+}
+
+.Menu .Bottom .Buttons {
+    display: flex;
+    height: 80%;
+    width: 250px;
+    margin-right: 10px;
+}
+
+.Menu .Bottom .Buttons .Button.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.Menu .Bottom .Buttons button {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.Menu .Bottom .Buttons button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.Menu .Bottom .Buttons .Log-off {
+    flex: 1;
+}
+
+.Menu .Bottom .Buttons .Turn-off {
+    flex: 1.2;
+}
+
+/* ==== TASKBAR ==== */
 
 .Taskbar {
     display: flex;
@@ -16,89 +242,113 @@
     bottom: 0px;
     width: 100vw;
     height: 5%;
-    background: rgb(35, 75, 255);
+    background: linear-gradient(var(--light-blue), var(--taskbar));
+    box-shadow: 0px 2.5px var(--light-blue) inset;
 }
 
-.Desktop > .Taskbar > .App {
+.Taskbar>.App {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 15%;
-    height: 100%;
+    font-size: 12.5px;
+    color: white;
+    border: 2px solid var(--light-blue);
+    background: linear-gradient(var(--light-blue), var(--main-blue));
 }
+
+.Taskbar>.Windows-Button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgb(33, 139, 33);
+    box-shadow: 0px 3px rgb(67, 207, 67) inset;
+    border-radius: 0px 25px 25px 0px;
+    border: none;
+    width: 100px;
+}
+
+.Taskbar>.Windows-Button:hover {
+    background: green;
+    cursor: pointer;
+}
+
+.Taskbar>.Windows-Button>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.Taskbar>.Windows-Button>div>span {
+    font-size: 20px;
+    color: white;
+    text-shadow: 2px 2px black;
+}
+
+.Taskbar>.Windows-Button>div>img {
+    width: 25px;
+    height: 25px;
+}
+
+
+
+/* ===== WINDOW ===== */
 
 .Window {
-    border: 2px solid rgb(38, 78, 255);
+    border: 5px solid rgb(38, 78, 255);
+    border-radius: 10px;
     position: absolute;
 }
 
-.Window > .Border {
-    width: 100%;
-    height: 20px;
-    border: 5px solid black;
-    position: absolute;
-}
 
-.Window > .Border:nth-child(3) {
-    background: yellow;
-    top: -10px;
-    left: -5px;
-    height: 1px;
-    cursor: n-resize
-}
-
-.Window > .Border:nth-child(4) {
-    background: orangered;
-    top: -10px;
-    left: -5px;
-    height: 100%;
-    width: 1px;
-    cursor: w-resize
-}
-
-
-.Window > .Border:nth-child(5) {
-    background: peru;
-    right: -10px;
-    top: -10px;
-    height: 100%;
-    width: 1px;
-    cursor: w-resize
-}
-
-.Window > .Border:nth-child(6) {
-    bottom: -10px;
-    right: -10px;
-    width: 100%;
-    height: 1px;
-    background: powderblue;
-    cursor: n-resize;
-}
-
-
-.Window > .Content {
-    height: 100%;
-    overflow: hidden;
-}
-
-.Window > .Content > iframe {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-}
+/* ======== HEADER ========= */
 
 .Header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 5px;
     color: white;
-    background: rgb(20, 88, 214);
+    background: linear-gradient(360deg, var(--main-blue), var(--light-blue));
 }
 
-.Header > .Title, 
-.Header > .Buttons {
+
+.Header>.Title,
+.Header>.Buttons {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.Header .Title {
+    display: flex;
+    gap: 5px;
+    font-size: 12.5px;
+}
+
+.Header>.Title>.App-Icon {
+    width: 25px;
+    height: 25px;
+}
+
+.Header .Buttons {
+    gap: 5px
+}
+
+.Header .Buttons>button {
+    width: 22px;
+    height: 22px;
+    border: none;
+    background: none;
+}
+
+.Header .Buttons>button:hover {
+    cursor: pointer;
+}
+
+
+.Header .Buttons>button>img {
+    width: 100%;
+    height: 100%;
+}
