@@ -62,9 +62,9 @@ function renderOpenWindows(windows) {
             const BUTTON_CONTAINER = DOM.buildElement('div', 'Buttons')
 
             for (let i = 0; i < 3; i++) {
-                if (i == 0) { var btn = DOM.buildElementInnerContent('button', 'Less', '-') }
-                if (i == 1) { var btn = DOM.buildElementInnerContent('button', 'Full', 'O') }
-                if (i == 2) { var btn = DOM.buildElementInnerContent('button', 'Close', 'X') }
+                if (i == 0) { var btn = DOM.buildElementInnerContent('button', 'Header-Button Less', '-') }
+                if (i == 1) { var btn = DOM.buildElementInnerContent('button', 'Header-Button Full', 'O') }
+                if (i == 2) { var btn = DOM.buildElementInnerContent('button', 'Header-Button Close', 'X') }
                 BUTTON_CONTAINER.append(btn)
             }
 
@@ -89,7 +89,7 @@ function renderOpenWindows(windows) {
 
     function TaskBar(Window) {
 
-        const APP = DOM.buildElement('div', 'App')
+        const APP = DOM.buildElement('div', `App ${Window.title}`)
         const img = DOM.buildElementAttribute('img', 'Taskbar-Image', 'img', Window.icon)
         const span = DOM.buildElementInnerContent('span', 'Taskbar-Title', Window.title)
 
@@ -146,14 +146,58 @@ function renderOpenWindows(windows) {
     for (let index in windows) {
         let container = Container(windows[index])
         let task = TaskBar(windows[index])
+
         DESKTOP.append(container)
         TASKBAR.append(task)
+
         resizeWindow(windows[index].title)
+        interactButton(container, windows[index].title)
+
     }
 
     moveWindow()
 
 
+}
+
+function interactButton(window, title) {
+    const buttons = document.querySelectorAll('.Header-Button') 
+
+    const taskbar_app = document.querySelector('.App.' + title)
+    console.log(taskbar_app, title)
+
+    var is_minimized = false 
+
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            if (button.className.includes('Close')) {
+
+            }
+            
+            else if (button.className.includes('Less')) {
+                window.style.display = 'none'
+                is_minimized = true
+            }
+
+            else if (button.className.includes('Full')) {
+
+            }
+            console.log(button.className)
+        })
+    })
+
+
+    taskbar_app.addEventListener('click', () => {
+        if (is_minimized) {
+            window.style.display = 'block'
+            is_minimized = false
+        }
+    })
+
+    taskbar_app.addEventListener('mouseenter', () => {
+        taskbar_app.style.cursor = 'pointer'
+    })
+    
 }
 
 function moveWindow() {
