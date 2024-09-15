@@ -7,6 +7,7 @@ import { Window } from './Modules/Classes.js'
 
 // SEGUNDA RELAÇÃO COM AS INFO DE CADA WINDOW
 const OPEN_WINDOWS = []
+var OPEN_APPS = -1
 const WINDOW_RELATION = getPageRelation()
 const DESKTOP = document.querySelector('main')
 
@@ -32,7 +33,8 @@ function OpenNewWindow(Buttons) {
                     const NEW_OPEN_WINDOW = new Window(obj, WINDOW_RELATION[i][obj].width, WINDOW_RELATION[i][obj].height, WINDOW_RELATION[i][obj].icon, WINDOW_RELATION[i][obj].iframe)
                     NEW_OPEN_WINDOW.setPosition(0, 0)
                     OPEN_WINDOWS.push(NEW_OPEN_WINDOW)
-                    renderOpenWindows(OPEN_WINDOWS)
+                    OPEN_APPS += 1
+                    renderOpenWindows(OPEN_WINDOWS, OPEN_APPS)
                     Buttons[i].classList.add('Open')
                 }
             }
@@ -41,7 +43,7 @@ function OpenNewWindow(Buttons) {
     }
 }
 
-function renderOpenWindows(windows) {
+function renderOpenWindows(windows, index) {
 
     const DOM = DOMBuilder()
 
@@ -114,7 +116,7 @@ function renderOpenWindows(windows) {
 
     function Container(Window) {
 
-        const CONTAINER = DOM.buildElement('div', `Window ${Window.title}`)
+        const CONTAINER = DOM.buildElement('div', `Window ${Window.title} #${index}`)
 
         function DefineWindowStyle() {
             console.log(Window.getPosition())
@@ -161,17 +163,29 @@ function renderOpenWindows(windows) {
 }
 
 function interactButton(window, title) {
+    
     const buttons = document.querySelectorAll('.Header-Button') 
-
+    const window_index =  window.className.split('#')[1]
     const taskbar_app = document.querySelector('.App.' + title)
-    console.log(taskbar_app, title)
+
+    const MENU_BUTTONS = document.querySelectorAll('.Functional')
 
     var is_minimized = false 
 
     buttons.forEach((button) => {
         button.addEventListener('click', () => {
-            if (button.className.includes('Close')) {
 
+            if (button.className.includes('Close')) {
+                OPEN_WINDOWS.splice(window_index, 1)
+
+                MENU_BUTTONS.forEach((button) => {
+                    if (button.id == title) {
+                        button.classList.remove('Open')
+                    }
+                })
+
+                OPEN_APPS -= 1
+                renderOpenWindows(OPEN_WINDOWS)
             }
             
             else if (button.className.includes('Less')) {
@@ -180,9 +194,11 @@ function interactButton(window, title) {
             }
 
             else if (button.className.includes('Full')) {
-
+                window.style.top = '0px'
+                window.style.left = '0px'
+                window.style.width = '100%'
+                window.style.height = '95%'
             }
-            console.log(button.className)
         })
     })
 
