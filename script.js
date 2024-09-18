@@ -14,9 +14,30 @@ const DESKTOP = document.querySelector('main')
 function DOMInteraction() {
 
     const MENU_BUTTONS = document.querySelectorAll('.Functional')
+    const WINDOW_BUTTON = document.querySelector('.Windows-Button')
+
     OpenNewWindow(MENU_BUTTONS)
+    OpenMenu(WINDOW_BUTTON)
 }
 
+function OpenMenu(WINDOW_BUTTON) {
+
+    const MENU = document.querySelector('.Menu')
+    var is_open = false 
+
+    WINDOW_BUTTON.addEventListener('click', () => {
+
+        if (!(is_open)) {
+            MENU.classList.add('Open')
+            is_open = true
+            return 
+        }
+
+        MENU.classList.remove('Open')
+        is_open = false
+    })
+
+}
 function OpenNewWindow(Buttons) {
 
     for (let i = 0; i < Buttons.length; i++) {

@@ -32,6 +32,7 @@ body {
     bottom: 3.5%;
     overflow: hidden;
     text-shadow: none;
+    display: none;
     border-radius: 0px 22px 0px 0px;
     border: 2px solid rgb(0, 45, 123);
 }
@@ -250,14 +251,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 15%;
+    height: 15%;
     font-size: 12.5px;
     color: white;
     border: 2px solid var(--light-blue);
     background: linear-gradient(var(--light-blue), var(--main-blue));
 }
 
-.Taskbar>.Windows-Button {
+.Windows-Button {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -265,28 +266,31 @@ body {
     box-shadow: 0px 3px rgb(67, 207, 67) inset;
     border-radius: 0px 25px 25px 0px;
     border: none;
-    width: 100px;
+    height: 5%;
+    width: 120px;
+    position: absolute;
+    bottom: 0px;
 }
 
-.Taskbar>.Windows-Button:hover {
+.Windows-Button:hover {
     background: green;
     cursor: pointer;
 }
 
-.Taskbar>.Windows-Button>div {
+.Windows-Button>div {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
 }
 
-.Taskbar>.Windows-Button>div>span {
+.Windows-Button>div>span {
     font-size: 20px;
     color: white;
     text-shadow: 2px 2px black;
 }
 
-.Taskbar>.Windows-Button>div>img {
+.Windows-Button>div>img {
     width: 25px;
     height: 25px;
 }
