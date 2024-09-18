@@ -1,0 +1,208 @@
+.Content {
+    display: grid;
+    grid-template-rows: 8% 3.5% 98.5%;
+    width: 100%;
+    height: 89%;
+    background: var(--main-color);
+}
+
+.Content > section {
+    align-items: center;
+    width: 100%;
+    padding: 1.5px;
+    border-top: 1px solid grey;
+}
+
+.Content > section:nth-child(1) {
+    display: grid;
+    grid-template-columns: 300px 255px 155px;
+    gap: 5px;
+}
+
+.Content .Navigation {
+    border-left: 1px solid grey;
+    overflow: hidden;
+    height: 100%;
+}
+
+.Content .Navigation > ul {
+    width: 100%;
+    gap: 5px;
+    padding: 2px;
+}
+
+
+.Navigation > ul > #nav-image > img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
+
+.Navigation > ul > #nav-image-back > img {
+    width: 45px;
+    object-fit: contain;
+}
+
+.Navigation > ul > #nav-image-next > img {
+    width: 35px;
+    object-fit: contain;
+}
+
+.Navigation > ul > #nav-image-text > img {
+    width: 42px;
+    object-fit: contain;
+}
+
+.Navigation > ul > #nav-image-center > img {
+    width: 35px;
+    object-fit: contain;
+}
+
+.Navigation > ul > #nav-image-end > img {
+    width: 45px;
+    object-fit: contain;
+}
+
+
+.Navigation > ul > #nav-symbol {
+    font-size: 0.5rem;
+}
+
+.Search {
+    display: grid;
+    gap: 5px;
+}
+
+.Search > div {
+    display: flex;
+    height: 100%;
+}
+
+.Search > div:nth-child(1) {
+    align-items: center;
+    width: auto;
+    font-size: 0.8rem;
+    color: grey;
+}
+
+.Search > div:nth-child(2) {
+    width: 90%;
+    background: white;
+}
+
+.Search > div:nth-child(2) > #input-img > img {
+    width: 20px;
+    height: 20px;
+}
+
+.Search > div:nth-child(2) > input {
+    width: 100%;
+    border: none;
+}
+
+.Search > div:nth-child(2) > #input-arrow > img{
+    width: 20px;
+    height: 100%
+}
+
+.Search > div:nth-child(3) {
+    justify-content: space-between;
+    align-items: center;
+    width: 120px;
+    height: 100%;
+}
+
+.Search > div:nth-child(3) > nav {
+    display: flex;
+    gap: 2.5px;
+    border-left: 1px solid grey;
+}
+
+.Search > div:nth-child(3) > nav > img {
+    width: 18px;
+    height: 18px;
+}
+
+.Search > div:nth-child(3) > nav:nth-child(2) > span {
+    color: grey;
+}
+
+.Google {
+    flex-direction: column;
+    gap: 5px;
+    grid-template-columns: 10px;
+    background: white;
+}
+
+.Google > div:nth-child(1) {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px;
+}
+
+.Google > div:nth-child(1) > ul {
+    display: flex;
+    list-style-type: none;
+    gap: 15px;
+}
+
+.Google > div:nth-child(2) {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    width: 100%;
+    height: 50%;
+
+}
+
+.Google > div:nth-child(2) > img {
+    width: 350px;
+    background: white;
+}
+
+.Google > div:nth-child(3) {
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    height: 5%;
+}
+
+.Google > div:nth-child(3) > input {
+    width: 100%;
+    padding: 5px;
+    outline: none;
+}
+
+.Google > div:nth-child(4) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    width: 40%;
+    height: 5%;
+}
+
+.Google > div:nth-child(4) > button {
+    width: auto;
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid blue;
+    background: white;
+}
+
+/* FLEX ELEMENTS */
+.Content > section, 
+.Content > section > .Navigation,
+.Navigation > ul,
+.Navigation > ul > li {
+    display: flex;
+    list-style: none;
+}
+
+/* CSS EVENTS */
+img:hover {
+    cursor: pointer;
+}

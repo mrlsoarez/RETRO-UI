@@ -190,6 +190,7 @@ function renderOpenWindows(windows, index) {
     moveWindow()
 
 
+
 }
 
 function interactButton(window, title) {
@@ -248,7 +249,7 @@ function interactButton(window, title) {
 
 function moveWindow() {
 
-    const DESKTOP = document.querySelector('main')
+    const DESKTOP = document.querySelector('.Desktop')
     const HEADERS = document.querySelectorAll('.Header')
     const WINDOWS = document.querySelectorAll('.Window')
 
@@ -299,7 +300,6 @@ function resizeWindow(title) {
 
     const BORDERS = document.querySelectorAll('.Border.' + title)
     const CONTAINER = document.querySelector('.Window.' + title)
-
     function getWindowInRelation() {
         for (let i = 0; i < OPEN_WINDOWS.length; i++) {
             if (OPEN_WINDOWS[i].title == title) {
@@ -316,6 +316,7 @@ function resizeWindow(title) {
 
     for (let i = 0; i < BORDERS.length; i++) {
         BORDERS[i].addEventListener('mousedown', (e) => {
+            console.log(BORDERS[i])
 
             POSITIONS.X = e.clientX
             POSITIONS.Y = e.clientY
@@ -326,7 +327,6 @@ function resizeWindow(title) {
             const BOTTOM = WINDOW.getOffsetBottom(DESKTOP.offsetHeight, CONTAINER.offsetHeight, TOP)
 
             function startResize(e) {
-
                 let NEW_HEIGHT
                 let NEW_TOP
                 let NEW_LEFT

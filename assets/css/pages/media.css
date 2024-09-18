@@ -1,0 +1,71 @@
+.Content {
+    display: grid;
+    grid-template-rows: 90% 10%;
+    width: 100%;
+    height: 91.5%;
+    background: lightblue;
+}
+
+.Content .Video {
+    background: black;
+}
+
+.Content .Player {
+    background: var(--main-color);
+}
+
+.Content .Player > div {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.Content .Player .Box-1 {
+    height: 40%;
+    width: 100%;
+}
+
+.Content .Player .Box-1 > div:nth-child(1){
+    border: 1px solid grey;
+    width: 20px;
+    height: 100%;
+    box-shadow: inset 1px 1px black;
+}
+
+.Content .Player .Box-1 > div:nth-child(2){
+    border: 1px solid grey;
+    width: 100%;
+}
+ 
+.Content .Player .Box-2 {
+    display: flex;
+    justify-content: space-between;
+    height: 60%;
+    width: 100%;
+}
+
+.Content .Player .Box-2 > div:nth-child(1) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 60%;
+}
+
+.Content .Player .Box-2 > div:nth-child(1) > button, 
+.Content .Player .Box-2 > div:nth-child(2) > button {
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 25px;
+}
+
+.Content .Player .Box-2 > div:nth-child(2) {
+    display: flex;
+    align-items: center;
+}
+
+.Content .Player .Box-2 > div:nth-child(2) > .Slider {
+    width: 150px;
+    border: 1px solid grey;
+}

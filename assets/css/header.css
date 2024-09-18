@@ -1,0 +1,37 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --main-color: #F1EEE2;
+}
+
+body {
+    font-family: 'Tahoma', sans-serif;
+}
+
+.Main {
+    height: 100vh;
+    overflow: hidden;
+    width: 100vw;
+}
+
+.Main .Header {
+    display: flex;
+    height: 3.5%;
+    width: 100%;
+    background: var(--main-color);
+}
+
+.Main .Header > ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin-left: 1%;
+}
+
+.Main .Header , ul {
+    align-items: center;
+}
