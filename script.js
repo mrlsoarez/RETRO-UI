@@ -315,8 +315,8 @@ function resizeWindow(title) {
     const POSITIONS = { X: '', Y: '' }
 
     for (let i = 0; i < BORDERS.length; i++) {
+        console.log(BORDERS[i])
         BORDERS[i].addEventListener('mousedown', (e) => {
-            console.log(BORDERS[i])
 
             POSITIONS.X = e.clientX
             POSITIONS.Y = e.clientY
