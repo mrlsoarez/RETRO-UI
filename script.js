@@ -300,6 +300,8 @@ function resizeWindow(title) {
 
     const BORDERS = document.querySelectorAll('.Border.' + title)
     const CONTAINER = document.querySelector('.Window.' + title)
+    const DESKTOP  = document.querySelector('.Desktop')
+    
     function getWindowInRelation() {
         for (let i = 0; i < OPEN_WINDOWS.length; i++) {
             if (OPEN_WINDOWS[i].title == title) {
@@ -315,7 +317,6 @@ function resizeWindow(title) {
     const POSITIONS = { X: '', Y: '' }
 
     for (let i = 0; i < BORDERS.length; i++) {
-        console.log(BORDERS[i])
         BORDERS[i].addEventListener('mousedown', (e) => {
 
             POSITIONS.X = e.clientX
