@@ -23,14 +23,14 @@ function DOMInteraction() {
 function OpenMenu(WINDOW_BUTTON) {
 
     const MENU = document.querySelector('.Menu')
-    var is_open = false 
+    var is_open = false
 
     WINDOW_BUTTON.addEventListener('click', () => {
 
         if (!(is_open)) {
             MENU.classList.add('Open')
             is_open = true
-            return 
+            return
         }
 
         MENU.classList.remove('Open')
@@ -76,24 +76,24 @@ function renderOpenWindows(windows, index) {
             return TITLE_CONTAINER
         }
 
-        function buildButtons() {
+        function buildButtons(title) {
 
-            const BUTTON_CONTAINER = DOM.buildElement('div', 'Buttons')
+            const BUTTON_CONTAINER = DOM.buildElement('div', `Buttons`)
 
             for (let i = 0; i < 3; i++) {
 
-                if (i == 0) { 
-                    var btn = DOM.buildElementInnerContent('button', 'Header-Button Less', '-') 
+                if (i == 0) {
+                    var btn = DOM.buildElementInnerContent('button', `Header-Button Less ${title}`, '-')
                     btn.innerHTML = "<img src = 'assets/images/window/minimize-window.png'></img>"
                 }
 
-                if (i == 1) { 
-                    var btn = DOM.buildElementInnerContent('button', 'Header-Button Full', 'O') 
+                if (i == 1) {
+                    var btn = DOM.buildElementInnerContent('button', `Header-Button Full ${title}`, 'O')
                     btn.innerHTML = "<img src = 'assets/images/window/full-window.jpg'></img>"
                 }
 
-                if (i == 2) { 
-                    var btn = DOM.buildElementInnerContent('button', 'Header-Button Close', 'X') 
+                if (i == 2) {
+                    var btn = DOM.buildElementInnerContent('button', `Header-Button Close ${title}`, 'X')
                     btn.innerHTML = "<img src = 'assets/images/window/close-window.png'></img>"
                 }
 
@@ -103,7 +103,7 @@ function renderOpenWindows(windows, index) {
             return BUTTON_CONTAINER
         }
 
-        HEADER.append(buildTitle(), buildButtons())
+        HEADER.append(buildTitle(), buildButtons(title))
         return HEADER
     }
 
@@ -149,7 +149,6 @@ function renderOpenWindows(windows, index) {
         const CONTAINER = DOM.buildElement('div', `Window ${Window.title} #${index}`)
 
         function DefineWindowStyle() {
-            console.log(Window.getPosition())
             CONTAINER.style.width = Window.width + 'px'
             CONTAINER.style.height = Window.height + 'px'
             CONTAINER.style.left = Window.getPosition().left + 'px'
@@ -194,57 +193,76 @@ function renderOpenWindows(windows, index) {
 }
 
 function interactButton(window, title) {
-    
-    const buttons = document.querySelectorAll('.Header-Button') 
-    const window_index =  window.className.split('#')[1]
-    const taskbar_app = document.querySelector('.App.' + title)
 
+    const BUTTON_CONTAINER = document.querySelectorAll('.Header-Button')
+    const INDEX = window.className.split('#')[1]
     const MENU_BUTTONS = document.querySelectorAll('.Functional')
+    const TASKBAR_APP = document.querySelector('.App.' + title)
 
-    var is_minimized = false 
+    var is_minimized = false
 
-    buttons.forEach((button) => {
-        button.addEventListener('click', () => {
+    function closeWindow() {
+        OPEN_WINDOWS.splice(INDEX, 1)
 
-            if (button.className.includes('Close')) {
-                OPEN_WINDOWS.splice(window_index, 1)
-
-                MENU_BUTTONS.forEach((button) => {
-                    if (button.id == title) {
-                        button.classList.remove('Open')
-                    }
-                })
-
-                OPEN_APPS -= 1
-                renderOpenWindows(OPEN_WINDOWS)
-            }
-            
-            else if (button.className.includes('Less')) {
-                window.style.display = 'none'
-                is_minimized = true
-            }
-
-            else if (button.className.includes('Full')) {
-                window.style.top = '0px'
-                window.style.left = '0px'
-                window.style.width = '100%'
-                window.style.height = '95%'
+        MENU_BUTTONS.forEach((button) => {
+            if (button.id == title) {
+                button.classList.remove('Open')
             }
         })
+
+        OPEN_APPS -= 1
+        renderOpenWindows(OPEN_WINDOWS)
+    }
+
+    function minimizeWindow(window) {
+        window.style.display = 'none'
+    }
+
+    function maximizeWindow(window) {
+        window.style.top = '0px'
+        window.style.left = '0px'
+        window.style.width = '100%'
+        window.style.height = '95%'
+    }
+
+
+
+    BUTTON_CONTAINER.forEach((button) => {
+
+        button.addEventListener('click', () => {
+            if (button.className.includes(title)) {
+                const WINDOW = document.querySelector('.Window.' + title)
+
+                if (button.className.includes('Close')) {
+                    closeWindow()
+                }
+
+                else if (button.className.includes('Less')) {
+                    minimizeWindow(WINDOW)
+                    is_minimized = true
+                }
+
+                else if (button.className.includes('Full')) {
+                    maximizeWindow(WINDOW)
+                }
+
+            }
+        })
+      
     })
 
 
-    taskbar_app.addEventListener('click', () => {
+    TASKBAR_APP.addEventListener('click', () => {
         if (is_minimized) {
             window.style.display = 'block'
             is_minimized = false
         }
     })
 
-    taskbar_app.addEventListener('mouseenter', () => {
-        taskbar_app.style.cursor = 'pointer'
+    TASKBAR_APP.addEventListener('mouseenter', () => {
+        TASKBAR_APP.style.cursor = 'pointer'
     })
-    
+
 }
 
 function moveWindow() {
@@ -260,19 +278,19 @@ function moveWindow() {
 
             const left = WINDOWS[i].offsetLeft
             const top = WINDOWS[i].offsetTop
-            
+
             POSITIONS.X = e.clientX
             POSITIONS.Y = e.clientY
-            
+
             function startMoving(e) {
 
                 const right = OPEN_WINDOWS[i].getOffsetRight(DESKTOP.offsetWidth, WINDOWS[i].offsetWidth, WINDOWS[i].offsetLeft)
                 const bottom = OPEN_WINDOWS[i].getOffsetBottom(DESKTOP.offsetHeight, WINDOWS[i].offsetHeight, WINDOWS[i].offsetTop)
-                
-                
+
+
                 const NEW_LEFT = OPEN_WINDOWS[i].moveX(left, right, e.clientX - POSITIONS.X)
                 const NEW_TOP = OPEN_WINDOWS[i].moveY(top, bottom, e.clientY - POSITIONS.Y)
-                
+
                 WINDOWS[i].style.left = NEW_LEFT + 'px'
                 WINDOWS[i].style.top = NEW_TOP + 'px'
                 WINDOWS[i].style.cursor = 'move'
@@ -300,8 +318,8 @@ function resizeWindow(title) {
 
     const BORDERS = document.querySelectorAll('.Border.' + title)
     const CONTAINER = document.querySelector('.Window.' + title)
-    const DESKTOP  = document.querySelector('.Desktop')
-    
+    const DESKTOP = document.querySelector('.Desktop')
+
     function getWindowInRelation() {
         for (let i = 0; i < OPEN_WINDOWS.length; i++) {
             if (OPEN_WINDOWS[i].title == title) {
@@ -363,7 +381,7 @@ function resizeWindow(title) {
                 CONTAINER.style.left = NEW_LEFT + 'px'
                 CONTAINER.style.width = NEW_WIDTH + 'px'
             }
-         
+
             function stopResize() {
                 document.removeEventListener('mousemove', startResize)
                 WINDOW.height = CONTAINER.offsetHeight
